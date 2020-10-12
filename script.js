@@ -80,18 +80,10 @@ $.ajax({
 }).then(function(forecast) {
     console.log(forecast);
 
-
-
-
 //the card need to have current date --- can we use moment? any better way?
 //weather icon 
 //temp. ----
 //Humidity---
-
-
-
-
-
 //--------------------------------------
 
     });

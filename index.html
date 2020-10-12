@@ -1,81 +1,109 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+      crossorigin="anonymous"
+    />
     <!-- font Awesome CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+      crossorigin="anonymous"
+    />
     <!-- css link -->
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./style.css" />
 
     <title>Weather Dashboard</title>
   </head>
   <body>
-      <header>
-        <div class="jumbotron jumbotron-fluid badge-primary bg-dark p-2">
+    <header>
+      <div class="jumbotron jumbotron-fluid badge-primary bg-dark p-2">
+        <h2 class="display-6 text-center font-weight-bold">
+          Weather Dashboard
+        </h2>
+      </div>
+    </header>
 
-            <h2 class="display-6 text-center font-weight-bold">Weather Dashboard</h2>      
-
-        </div>
-      </header>
-
-      <main>
-        <div class="container-fluid">
+    <main>
+      <div class="container-fluid">
         <div class="row">
-
-          <!--    search for a city area and city button list           -->       
-          <div class="col-4 bg-light"> 
-            <label  for="citySearch">Search for a city</label>
-            <div class="input-group mb-3">              
-              <input type="text" class="form-control" id ="searchCity" aria-label="Search City" aria-describedby="basic-addon2">
+          <!--    search for a city area and city button list           -->
+          <div class="col-4 bg-light">
+            <label for="citySearch">Search for a city</label>
+            <div class="input-group mb-3">
+              <input
+                type="text"
+                class="form-control"
+                id="searchCity"
+                aria-label="Search City"
+                aria-describedby="basic-addon2"
+              />
               <!-- button triggers new city search. -->
               <div class="input-group-append">
-                <button class="input-group-text" id="addCitybtn" type="submit"> <i class = "fa fa-search"></i></button>
+                <button class="input-group-text" id="addCitybtn" type="submit">
+                  <i class="fa fa-search"></i>
+                </button>
               </div>
             </div>
 
-             <!-- Display city button list -->
-              <div class="display-button" id="buttonView">
-                <ul id="buttonView" >
-                </ul>
-              </div>
-
+            <!-- Display city button list -->
+            <div class="display-button" id="buttonView">
+              <ul id="buttonView"></ul>
+            </div>
           </div>
 
-         
           <!--          Display weather area                -->
           <div class="col-8" id="weatherDisplay">
-            <div class="weather-details" id="cityWeather">
-
-              <p>This area for weather details</p>
-
+            <div class="row">
+              <div class="weather-details" id="cityWeather">
+                <p>This area for weather details</p>
+              </div>
 
             </div>
+            
 
             <!-- display 5 day frecast -->
-            <div class="row">
-              <div class="col-8" id="forecast">
-                <p>this area for weather forecast</p>
-
-              </div>
+            
+            <div class="row text-light">
               
+              <div class="col-12" id="forecast">
+                <!-- <h3>this area for 5-Day forecast</h3> -->
 
-
+                <div class="card col-2 bg-primary text-white p-3">
+                </div>
+              </div>
             </div>
+
+
           </div>
         </div>
-        </div>
-      </main>
+      </div>
+    </main>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
+      integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
+      crossorigin="anonymous"
+    ></script>
 
-    <script type="text/javascript" src="script.js"> </script>
+    <script type="text/javascript" src="script.js"></script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
-   
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
