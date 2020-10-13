@@ -16,21 +16,23 @@ function setup(){
         citySearches.push(city);
     
                  
-        // setCitiesToLocalStorage();
+        setCitiesToLocalStorage();
         getCurrentWeather(city);
         // getFiveDayForecast(city);
         displayPastCitySearchList();
 
     
     });
-    // getCitiesFromLocalStorage();
+    getCitiesFromLocalStorage();
 }
 
 function displayPastCitySearchList(){
 
     $("#buttonView").empty();
 
-    for (var i=0; i < citySearches.length; i++) {
+    var listOfCities = citySearches.reverse(); 
+
+    for (var i=0; i < listOfCities.length; i++) {
         var li = $("<li>");
         var btn = $("<button>");
         btn.addClass("city-btn");
@@ -77,14 +79,11 @@ function getCurrentWeather(){
         var temperature = convertKtoF(parseFloat(response.main.temp));
         var pTwo = $("<p>").text("Temperature: " + temperature + "  F");
         weatherDiv.append(pTwo);
-   
-
 
         function convertKtoF(tempInKelvin) {
             return(((tempInKelvin-273.15)*9)/5 + 32).toFixed(2);
         }
-       
-        
+
         //humidity
         var humidity = response.main.humidity;
         var pThree = $("<p>").text("Humidity: " + humidity +"%");
@@ -103,8 +102,6 @@ function getCurrentWeather(){
         var lat = response.coord.lat;
         var lon = response.coord.lon;
 
-      
-
         const queryUvi = "http://api.openweathermap.org/data/2.5/uvi?lat="+ lat + "&lon="+ lon + "&appid=3b39c2827e08627d2c1ebcae6181db52";
 
         $.ajax({
@@ -117,7 +114,7 @@ function getCurrentWeather(){
         var uvIndex = getUvi.value;
         var pFour = $("<p>").text("UV Index: " + uvIndex);
         weatherDiv.append(pFour);
-// need to do if statement for color code: green(<2), yellow(3-5), orange(6-7), red(8-10), purpple(>11) ----need if statment and add id
+    // need to do if statement for color code: green(<2), yellow(3-5), orange(6-7), red(8-10), purpple(>11) ----need if statment and add id
         })
         $("#cityWeather").append(weatherDiv);
     });
@@ -143,8 +140,14 @@ function getFiveDayForecast(){
     
     });
 
-
+    
 }
+
+$(".city-btn").on("click", function(){
+    getCurrentWeather();
+        // getFiveDayForecast();
+
+});
 
 $(document).ready(function(){
     setup();
