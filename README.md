@@ -7,7 +7,6 @@ This application let user to retrieve weather data from another application's AP
 
 ## Usage 
 
-Provide instructions and examples for use. Include screenshots as needed. 
 
 
 ## Credits

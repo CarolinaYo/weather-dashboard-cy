@@ -1,5 +1,5 @@
 .input-group-text{
-    background-color: blue;
+    background-color: #007BFF;
     
 }
 .fa-search{
@@ -7,4 +7,12 @@
 }
 li {
     display: block;
+    margin-left: 5px;
+}
+.weather-details{
+    margin-left: 40px;
+}
+
+#forecast{
+    margin-left: 20px;
 }
