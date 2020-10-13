@@ -1,18 +1,17 @@
-.input-group-text{
-    background-color: #007BFF;
-    
+.input-group-text {
+  background-color: #007bff;
 }
-.fa-search{
-    color: cornsilk;
+.fa-search {
+  color: cornsilk;
 }
 li {
-    display: block;
-    margin-left: 5px;
+  display: block;
+  margin-left: 5px;
 }
-.weather-details{
-    margin-left: 40px;
+.weather-details {
+  margin-left: 40px;
 }
 
-#forecast{
-    margin-left: 20px;
+#forecast {
+  margin-left: 20px;
 }

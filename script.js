@@ -21,16 +21,15 @@ function setup() {
 }
 
 function getCitiesFromLocalStorage() {
-    if (localStorage.getItem("cities")) {
-      citySearches = JSON.parse(localStorage.getItem("cities"));
-    }
+  if (localStorage.getItem("cities")) {
+    citySearches = JSON.parse(localStorage.getItem("cities"));
   }
-  
-  // Saves citySearches array to local storage
-  function setCitiesToLocalStorage() {
-    localStorage.setItem("cities", JSON.stringify(citySearches));
-  }
+}
 
+// Saves citySearches array to local storage
+function setCitiesToLocalStorage() {
+  localStorage.setItem("cities", JSON.stringify(citySearches));
+}
 
 function displayPastCitySearchList() {
   $("#buttonView").empty();
@@ -47,8 +46,6 @@ function displayPastCitySearchList() {
     li.append(btn);
   }
 }
-
-
 
 function getCurrentWeather(city) {
   const queryUrl =
@@ -119,14 +116,17 @@ function getCurrentWeather(city) {
 
 function getFiveDayForecast(city) {
   // unauthorized
-  const apiForecast = "http://api.openweathermap.org/data/2.5/forecast/daily?q="+city+"&cnt=5&appid=3b39c2827e08627d2c1ebcae6181db5";
+  const apiForecast =
+    "http://api.openweathermap.org/data/2.5/forecast/daily?q=" +
+    city +
+    "&cnt=5&appid=3b39c2827e08627d2c1ebcae6181db5";
 
-//   const apiForecast =
-//     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
-//     lat +
-//     "&lon=" +
-//     lon +
-//     "&exclude=current&appid=3b39c2827e08627d2c1ebcae6181db5";
+  //   const apiForecast =
+  //     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+  //     lat +
+  //     "&lon=" +
+  //     lon +
+  //     "&exclude=current&appid=3b39c2827e08627d2c1ebcae6181db5";
 
   $.ajax({
     url: apiForecast,
