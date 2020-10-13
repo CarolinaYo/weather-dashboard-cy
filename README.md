@@ -17,7 +17,7 @@ Third party access: [OpenWEather API] (https://openweathermap.org/)
 
 ## Maintainer 
 This is an individual assignment created by Carolina Yoedhana.
-* GitHub Link: 
+* GitHub Link: git@github.com:CarolinaYo/weather-dashboard-cy.git
 * GitHub Page Link:
 
 
