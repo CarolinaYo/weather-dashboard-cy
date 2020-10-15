@@ -42,8 +42,9 @@ function displayPastCitySearchList() {
     btn.addClass("city-btn");
     btn.attr("data-city", citySearches[i]);
     btn.text(citySearches[i]);
-    $("#buttonView").append(li);
+    
     li.append(btn);
+    $("#listView").append(li);
   }
 }
 
@@ -96,7 +97,7 @@ function getCurrentWeather(city) {
     var windMph = (wind * 2.24).toFixed(1);
     var pFour = $("<p>").text("Wind Speed: " + windMph + " MPH");
     weatherDiv.append(pFour);
-    // $("#cityWeather").append(weatherDiv);
+    $("#cityWeather").append(weatherDiv);
 
     //UV index
 
@@ -124,8 +125,9 @@ function getCurrentWeather(city) {
       }
 
       weatherDiv.append(pFour);
+      $("#cityWeather").append(weatherDiv);
     });
-    $("#cityWeather").append(weatherDiv);
+   
 
     const apiForecast =
       "https://api.openweathermap.org/data/2.5/onecall?lat=" +
@@ -146,9 +148,11 @@ function getCurrentWeather(city) {
 }
 
 console.log(lat);
+
 function getFiveDayForecast(lat, lon) {
   //5day forecast
-    for(var i=0, i<5, i++) {
+    for (var i = 0; i < 5; i++) {
+
         var addDay = i+1;
         var iconCode = forecast.daily[i].weather[i].icon;
         var iconUrl = "http://openweathermap.org/img/wn/"+iconCode+".png";
@@ -203,6 +207,7 @@ $(".city-btn").on("click", function () {
   getFiveDayForecast(lat,lon);
   toggleDisplayWeather(show);
 });
+
 
 $(document).ready(function () {
   setup();
