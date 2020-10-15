@@ -149,42 +149,43 @@ console.log(lat);
 function getFiveDayForecast(lat, lon) {
   //5day forecast
     for(var i=0, i<5, i++) {
-      var addDay = i+1;
-      var iconCode = forecast.daily[i].weather[i].icon;
-      var iconUrl = "http://openweathermap.org/img/wn/"+iconCode+".png";
-      var fTemp= forecast.daily[i].temp.day;
-      var fHumidity = forecast.daily[i].humidity;
+        var addDay = i+1;
+        var iconCode = forecast.daily[i].weather[i].icon;
+        var iconUrl = "http://openweathermap.org/img/wn/"+iconCode+".png";
+        var fTemp= forecast.daily[i].temp.day;
+        var fHumidity = forecast.daily[i].humidity;
 
-        var fTempInF = FtempKtoF(parseFloat(fTemp));
-        function FtempKtoF(fTempInKelvin) {
-        return (((fTempInKelvin - 273.15) * 9) / 5 + 32).toFixed(2);
-        }
-      
+            var fTempInF = FtempKtoF(parseFloat(fTemp));
+            function FtempKtoF(fTempInKelvin) {
+            return (((fTempInKelvin - 273.15) * 9) / 5 + 32).toFixed(2);
+            }
+
         //future date
         var fdate = new Date();
         var fd = fdate.getDate() + addDay;
         var fm = fdate.getMonth() + addDay;
         var fyyyy = fdate.getFullYear() + addDay;
         var newFutureDate = fd + "/"+ fm + "/"+ fyyyy;
-      //place to print the information
 
-    var forecastDiv = $("<div>").addClass("card col-sm-2 bg-primary text-white p-3");
+        //place to print the information
 
-    var fDate = $("<p>").text(newFutureDate);;
+        var forecastDiv = $("<div>").addClass("card col-sm-2 bg-primary text-white p-3");
 
-    forecastDiv.append(date);
-    $("#forecast").append(forecastDiv);
+        var fDate = $("<p>").text(newFutureDate);;
 
-    var ficon = $("<img>").attr("src", iconUrl);
-    forecastDiv.append(ficon);
+        forecastDiv.append(date);
+        $("#forecast").append(forecastDiv);
 
-    var ftempinF = $("<p>").text("Temperature: " + fTempInF + "  F");
-    forecastDiv.append(ftempinF);
+        var ficon = $("<img>").attr("src", iconUrl);
+        forecastDiv.append(ficon);
 
-    var fHumidValue = $("<p>").text("Humidity: " + fHumidity);
-    forecastDiv.append(fHumidValue);
+        var ftempinF = $("<p>").text("Temperature: " + fTempInF + "  F");
+        forecastDiv.append(ftempinF);
 
-    };
+        var fHumidValue = $("<p>").text("Humidity: " + fHumidity);
+        forecastDiv.append(fHumidValue);
+
+        };
 }
 
 var show =false;
@@ -198,8 +199,8 @@ function toggleDisplayWeather(show) {
 
 $(".city-btn").on("click", function () {
     
-    getCurrentWeather(city);
-  // getFiveDayForecast(lat,lon);
+  getCurrentWeather(city);
+  getFiveDayForecast(lat,lon);
   toggleDisplayWeather(show);
 });
 
