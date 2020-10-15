@@ -116,10 +116,11 @@ function getCurrentWeather(city) {
 
       var uvIndex = getUvi.value;
       var pFour = $("<p>").text("UV Index: " + uvIndex);
+
       if (uvIndex <= 2) {
         pFour.attr("id", favorable);
       } else if (uvIndex > 2 && uvIndex < 6) {
-        pFour.attr("id", favorable);
+        pFour.attr("id", moderate);
       } else {
         pFour.attr("id", danger);
       }
@@ -147,13 +148,15 @@ function getCurrentWeather(city) {
   });
 }
 
+//value not passing
 console.log(lat);
 
 function getFiveDayForecast(lat, lon) {
   //5day forecast
     for (var i = 0; i < 5; i++) {
 
-        var addDay = i+1;
+        const newLocal = i + 1;
+        var addDay = newLocal;
         var iconCode = forecast.daily[i].weather[i].icon;
         var iconUrl = "http://openweathermap.org/img/wn/"+iconCode+".png";
         var fTemp= forecast.daily[i].temp.day;
