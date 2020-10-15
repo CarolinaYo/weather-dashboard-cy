@@ -14,7 +14,7 @@ function setup() {
 
     setCitiesToLocalStorage();
     getCurrentWeather(city);
-    getFiveDayForecast(city);
+    getFiveDayForecast(lat, lon);
     displayPastCitySearchList();
   });
   getCitiesFromLocalStorage();
@@ -59,10 +59,15 @@ function getCurrentWeather(city) {
   }).then(function (response) {
     console.log(response);
 
+    lat = response.coord.lat;
+    lon = response.coord.lon;
+
     //name of the city
     var cityDiv = $("<div class='nameOfcity'>");
     var pOne = $("<h1>").text(response.name);
+    var currentDate = moment().format("MMM Do YYY");
     cityDiv.append(pOne);
+    cityDiv.append(currentDate);
     $("#cityWeather").append(cityDiv);
 
     //temperature
@@ -87,12 +92,9 @@ function getCurrentWeather(city) {
     weatherDiv.append(pFour);
     // $("#cityWeather").append(weatherDiv);
 
-    //UV index, another ajax call
+    //UV index
 
-    lat = response.coord.lat;
-    lon = response.coord.lon;
-
-    const queryUvi =
+    queryUvi =
       "http://api.openweathermap.org/data/2.5/uvi?lat=" +
       lat +
       "&lon=" +
@@ -103,48 +105,76 @@ function getCurrentWeather(city) {
       url: queryUvi,
       method: "GET",
     }).then(function (getUvi) {
-      console.log(getUvi);
+      //   console.log(getUvi);
 
       var uvIndex = getUvi.value;
       var pFour = $("<p>").text("UV Index: " + uvIndex);
+      if (uvIndex <= 2) {
+        pFour.attr("id", favorable);
+      } else if (uvIndex > 2 && uvIndex < 6) {
+        pFour.attr("id", favorable);
+      } else {
+        pFour.attr("id", danger);
+      }
+
       weatherDiv.append(pFour);
-      // need to do if statement for color code: green(<2), yellow(3-5), orange(6-7), red(8-10), purpple(>11) ----need if statment and add id #warningColor
     });
     $("#cityWeather").append(weatherDiv);
+
+    const apiForecast =
+      "https://api.openweathermap.org/data/2.5/onecall?lat=" +
+      lat +
+      "&lon=" +
+      lon +
+      "&exclude=current,minutely,hourly&appid=3b39c2827e08627d2c1ebcae6181db52";
+
+    $.ajax({
+      url: apiForecast,
+      method: "GET",
+    }).then(function (forecast) {
+      console.log(forecast);
+
+      getFiveDayForecast(lat, lon);
+    });
   });
 }
 
-function getFiveDayForecast(city) {
-  // unauthorized
-  const apiForecast =
-    "http://api.openweathermap.org/data/2.5/forecast/daily?q=" +
-    city +
-    "&cnt=5&appid=3b39c2827e08627d2c1ebcae6181db5";
+console.log(lat);
+function getFiveDayForecast(lat, lon) {
+  //5day forecast
+    for(var i=0, i<5, i++) {
+      var fDate = ;
+      var iconCode = forecast.daily[i].weather[i].icon;
+      var iconUrl = "http://openweathermap.org/img/wn/"+iconCode+".png";
+      var fTemp= forecast.daily[i].temp.day;
+      var fHumidity = forecast.daily[i].humidity;
 
-  //   const apiForecast =
-  //     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
-  //     lat +
-  //     "&lon=" +
-  //     lon +
-  //     "&exclude=current&appid=3b39c2827e08627d2c1ebcae6181db5";
+      //place to print the information
 
-  $.ajax({
-    url: apiForecast,
-    method: "GET",
-  }).then(function (forecast) {
-    console.log(forecast);
+    var forecastDiv = $("<div class='card col-sm-2 bg-primary text-white p-3'>");
+    var date = $("<p>").text(fDate);
+    forecastDiv.append(date);
+    $("#forecast").append(forecastDiv);
 
-    //the card need to have current date?
-    //weather icon
-    //temp. ----
-    //Humidity---
-    //--------------------------------------
-  });
+    var ficon = $("<img>").attr("src", iconUrl);
+
+
+    };
 }
+
+var show =false;
+function toggleMessage(show) {
+    if (show) {
+      $("#weatherDisplay").removeClass("hidden");
+    } else {
+      $("#weatherDisplay").addClass("hidden");
+    }
+  }
 
 $(".city-btn").on("click", function () {
-  getCurrentWeather(city);
-  // getFiveDayForecast();
+    var show = false;
+    getCurrentWeather(city);
+  // getFiveDayForecast(lat,lon);
 });
 
 $(document).ready(function () {
@@ -154,6 +184,6 @@ $(document).ready(function () {
     displayPastCitySearchList();
     city = citySearches[citySearches.length - 1];
     getCurrentWeather(city);
-    getFiveDayForecast(city);
+    getFiveDayForecast(lat, lon);
   }
 });

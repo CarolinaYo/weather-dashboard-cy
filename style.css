@@ -15,3 +15,18 @@ li {
 #forecast {
   margin-left: 20px;
 }
+/* .hidden {
+    display: none;
+    } */
+
+
+#favorable {
+    background-color: yellow;
+};
+
+#moderate {
+    background-color: orange;
+};
+#severe {
+    background-color: red;
+}
