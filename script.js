@@ -149,7 +149,7 @@ console.log(lat);
 function getFiveDayForecast(lat, lon) {
   //5day forecast
     for(var i=0, i<5, i++) {
-      var fDate = ;
+      var addDay = i+1;
       var iconCode = forecast.daily[i].weather[i].icon;
       var iconUrl = "http://openweathermap.org/img/wn/"+iconCode+".png";
       var fTemp= forecast.daily[i].temp.day;
@@ -160,12 +160,17 @@ function getFiveDayForecast(lat, lon) {
         return (((fTempInKelvin - 273.15) * 9) / 5 + 32).toFixed(2);
         }
       
-
+        //future date
+        var fdate = new Date();
+        var fd = fdate.getDate() + addDay;
+        var fm = fdate.getMonth() + addDay;
+        var fyyyy = fdate.getFullYear() + addDay;
+        var newFutureDate = fd + "/"+ fm + "/"+ fyyyy;
       //place to print the information
 
     var forecastDiv = $("<div>").addClass("card col-sm-2 bg-primary text-white p-3");
 
-    var date = $("<p>").text(fDate);
+    var fDate = $("<p>").text(newFutureDate);;
 
     forecastDiv.append(date);
     $("#forecast").append(forecastDiv);
