@@ -12,10 +12,11 @@ function setup() {
     city = searchField.val().trim();
     citySearches.push(city);
 
+    displayPastCitySearchList();
     setCitiesToLocalStorage();
     getCurrentWeather(city);
     getFiveDayForecast(lat, lon);
-    displayPastCitySearchList();
+    
   });
   getCitiesFromLocalStorage();
 }
@@ -48,20 +49,46 @@ function displayPastCitySearchList() {
   }
 }
 
-function getCurrentWeather(city) {
-  const queryUrl =
+
+function getLanLong(city) {
+    const queryUrl =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
-    "&appid=3b39c2827e08627d2c1ebcae6181db52";
-  //----------------------------------------------
+    "&appid=3b39c2827e08627d2c1ebcae6181db52"; 
+    $.ajax({
+        url: queryUrl,
+        method: "GET",
+      }).then(function (response) {
+        console.log(response);
+    
+        lat = response.coord.lat;
+        lon = response.coord.lon;
+      });
+
+};
+
+function getWeatherData() {
+    const oneCallData ="https://api.openweathermap.org/data/2.5/onecall?lat=" +
+    lat +
+    "&lon=" +
+    lon +
+    "&units=imperial&exclude=minutely,hourly&appid=3b39c2827e08627d2c1ebcae6181db52";
+// }
+
+// function getCurrentWeather(city) {
+//   const queryUrl =
+//     "https://api.openweathermap.org/data/2.5/weather?q=" +
+//     city +
+//     "&appid=3b39c2827e08627d2c1ebcae6181db52";
+//   //----------------------------------------------
   $.ajax({
-    url: queryUrl,
+    url: oneCallData,
     method: "GET",
   }).then(function (response) {
     console.log(response);
 
-    lat = response.coord.lat;
-    lon = response.coord.lon;
+    // lat = response.coord.lat;
+    // lon = response.coord.lon;
 
     //name of the city
     var cityDiv = $("<div class='nameOfcity'>");
@@ -72,7 +99,7 @@ function getCurrentWeather(city) {
     var mm = date.getMonth();
     var yyyy = date.getFullYear();
     var currentDate = dd + "/"+ mm + "/"+ yyyy;
-    var pdate = $("<p>").text(currentDate);
+    var pdate = $("<p>").text("(" +currentDate+ ")");
     cityDiv.append(pOne);
     cityDiv.append(pdate);
     $("#cityWeather").append(cityDiv);
