@@ -102,18 +102,18 @@ function displayCurrentWeather() {
  weatherDiv.append(pTwo);
 
  //humidity
-var humidity = response.main.humidity;
+var humidity = response.current.humidity;
 var pThree = $("<p>").text("Humidity: " + humidity + "%");
 weatherDiv.append(pThree);
 
 //wind speed
-var wind = response.wind.speed;
+var wind = response.current.wind_speed;
 var windMph = (wind * 2.24).toFixed(1);
 var pFour = $("<p>").text("Wind Speed: " + windMph + " MPH");
 weatherDiv.append(pFour);
 $("#cityWeather").append(weatherDiv);
 
-var uvIndex = getUvi.value;
+var uvIndex = response.current.uvi;
 var pFour = $("<p>").text("UV Index: " + uvIndex);
 
     if (uvIndex <= 2) {
@@ -126,9 +126,6 @@ var pFour = $("<p>").text("UV Index: " + uvIndex);
 
 weatherDiv.append(pFour);
 $("#cityWeather").append(weatherDiv);
-
-
-
 }
 
 
@@ -140,10 +137,10 @@ function displayFiveDayForecast() {
 
         const newLocal = i + 1;
         var addDay = newLocal;
-        var iconCode = forecast.daily[i].weather[i].icon;
+        var iconCode = response.daily[i].weather[i].icon;
         var iconUrl = "http://openweathermap.org/img/wn/"+iconCode+".png";
-        var fTemp= forecast.daily[i].temp.day;
-        var fHumidity = forecast.daily[i].humidity;
+        var fTemp= response.daily[i].temp.day;
+        var fHumidity = response.daily[i].humidity;
 
             var fTempInF = FtempKtoF(parseFloat(fTemp));
             function FtempKtoF(fTempInKelvin) {
@@ -153,7 +150,7 @@ function displayFiveDayForecast() {
         //future date
         var fdate = new Date();
         var fd = fdate.getDate() + addDay;
-        var fm = fdate.getMonth() + addDay;
+        var fm = fdate.getMonth() + addDay +1;
         var fyyyy = fdate.getFullYear() + addDay;
         var newFutureDate = fd + "/"+ fm + "/"+ fyyyy;
 
@@ -161,10 +158,10 @@ function displayFiveDayForecast() {
 
         var forecastDiv = $("<div>").addClass("card col-sm-2 bg-primary text-white p-3");
 
-        var fDate = $("<p>").text(newFutureDate);;
+        var newDate = $("<p>").text(newFutureDate);;
 
-        forecastDiv.append(date);
-        $("#forecast").append(forecastDiv);
+        forecastDiv.append(newDate);
+        // $("#forecast").append(forecastDiv);
 
         var ficon = $("<img>").attr("src", iconUrl);
         forecastDiv.append(ficon);
@@ -174,6 +171,7 @@ function displayFiveDayForecast() {
 
         var fHumidValue = $("<p>").text("Humidity: " + fHumidity);
         forecastDiv.append(fHumidValue);
+        $("#forecast").append(forecastDiv);
 
         };
 }
