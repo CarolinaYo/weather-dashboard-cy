@@ -1,5 +1,7 @@
 var citySearches = [];
 var city;
+var lat;
+var lon;
 var searchBtn = $("#addCityBtn");
 var searchField = $("#searchCity");
 
@@ -37,12 +39,12 @@ function displayPastCitySearchList() {
 
   for (var i = 0; i < listOfCities.length; i++) {
     var li = $("<li>");
-    var btn = $("<button>");
-    btn.addClass("city-btn");
-    btn.attr("data-city", citySearches[i]);
-    btn.text(citySearches[i]);
+    var list = $("<a>");
+    list.addClass("list-group-item list-group-item-action");
+    list.attr("data-city", citySearches[i]);
+    list.text(citySearches[i]);
     
-    li.append(btn);
+    li.append(list);
     $("#listView").append(li);
   }
 }
@@ -55,7 +57,7 @@ function getLatLong(cityName) {
     "&appid=3b39c2827e08627d2c1ebcae6181db52"; 
     $.ajax({
         url: queryUrl,
-        method: "GET",
+        method: "GET"
       });
 
 };
@@ -69,7 +71,7 @@ function getWeatherData(lat,lon) {
 
   $.ajax({
     url: oneCallData,
-    method: "GET",
+    method: "GET"
   }).then(function (response) {
     // console.log("getWeatherData response:", response);
     var weatherData = response;
@@ -95,25 +97,25 @@ function displayCurrentWeather() {
     cityDiv.append(pdate);
     $("#cityWeather").append(cityDiv);
  //temperature
- var tempinF= response.current.temp;
+ var tempinF= weatherData.current.temp;
  var weatherDiv = $("<div class='weatherInfo'>");
  
  var pTwo = $("<p>").text("Temperature: "+tempinF+" &#730F");
  weatherDiv.append(pTwo);
 
  //humidity
-var humidity = response.current.humidity;
+var humidity = weatherData.current.humidity;
 var pThree = $("<p>").text("Humidity: " + humidity + "%");
 weatherDiv.append(pThree);
 
 //wind speed
-var wind = response.current.wind_speed;
+var wind = weatherData.current.wind_speed;
 var windMph = (wind * 2.24).toFixed(1);
 var pFour = $("<p>").text("Wind Speed: " + windMph + " MPH");
 weatherDiv.append(pFour);
 $("#cityWeather").append(weatherDiv);
 
-var uvIndex = response.current.uvi;
+var uvIndex = weatherData.current.uvi;
 var pFour = $("<p>").text("UV Index: " + uvIndex);
 
     if (uvIndex <= 2) {
@@ -176,8 +178,9 @@ function displayFiveDayForecast() {
         };
 }
 
-var show =false;
+
 function toggleDisplayWeather(show) {
+    var show =false;
     if (show) {
       $("#weatherDisplay").removeClass("hidden");
     } else {
@@ -199,13 +202,11 @@ $(document).ready(function () {
   if (citySearches.length > 0) {
     displayPastCitySearchList();
     city = citySearches[citySearches.length - 1];
-    // getCurrentWeather(city);
-    // getFiveDayForecast(lat, lon);
 
     getLatLong(city).then(function(response){
 
-        let lat = response.coord.lat;
-        let lon = response.coord.lon;
+        lat = response.coord.lat;
+        lon = response.coord.lon;
         getWeatherData(lat,lon);
     });
 
