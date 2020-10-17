@@ -71,7 +71,7 @@ function getWeatherData(lat,lon) {
     url: oneCallData,
     method: "GET",
   }).then(function (response) {
-    console.log("getWeatherData response:", response);
+    // console.log("getWeatherData response:", response);
     var weatherData = response;
     displayCurrentWeather(weatherData);
     displayFiveDayForecast(weatherData);
@@ -80,14 +80,14 @@ function getWeatherData(lat,lon) {
 }
 
 
-function displayCurrentWeather(weatherData) {
+function displayCurrentWeather() {
 
     var cityDiv = $("<div class='nameOfcity'>");
-    var pOne = $("<h1>").text(response.name);
+    var pOne = $("<h1>").text(city);
     //date
     var date = new Date();
     var dd = date.getDate();
-    var mm = date.getMonth();
+    var mm = date.getMonth()+1;
     var yyyy = date.getFullYear();
     var currentDate = dd + "/"+ mm + "/"+ yyyy;
     var pdate = $("<p>").text("(" +currentDate+ ")");
@@ -95,15 +95,13 @@ function displayCurrentWeather(weatherData) {
     cityDiv.append(pdate);
     $("#cityWeather").append(cityDiv);
  //temperature
+ var tempinF= response.current.temp;
  var weatherDiv = $("<div class='weatherInfo'>");
- var temperature = convertKtoF(parseFloat(response.main.temp));
- var pTwo = $("<p>").text("Temperature: " + temperature + "  F");
+ 
+ var pTwo = $("<p>").text("Temperature: "+tempinF+" &#730F");
  weatherDiv.append(pTwo);
 
- function convertKtoF(tempInKelvin) {
-   return (((tempInKelvin - 273.15) * 9) / 5 + 32).toFixed(2);
- }
-//humidity
+ //humidity
 var humidity = response.main.humidity;
 var pThree = $("<p>").text("Humidity: " + humidity + "%");
 weatherDiv.append(pThree);
