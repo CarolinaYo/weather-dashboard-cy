@@ -14,7 +14,7 @@ function setup() {
 
     displayPastCitySearchList();
     setCitiesToLocalStorage();
-    getCurrentWeather(city);
+    displayCurrentWeather(city);
     getFiveDayForecast(lat, lon);
     
   });
@@ -55,7 +55,7 @@ function getLatLong(cityName) {
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     cityName +
     "&appid=3b39c2827e08627d2c1ebcae6181db52"; 
-    $.ajax({
+    return $.ajax({
         url: queryUrl,
         method: "GET"
       });
@@ -82,7 +82,7 @@ function getWeatherData(lat,lon) {
 }
 
 
-function displayCurrentWeather() {
+function displayCurrentWeather(weatherData) {
 
     var cityDiv = $("<div class='nameOfcity'>");
     var pOne = $("<h1>").text(city);
@@ -100,7 +100,7 @@ function displayCurrentWeather() {
  var tempinF= weatherData.current.temp;
  var weatherDiv = $("<div class='weatherInfo'>");
  
- var pTwo = $("<p>").text("Temperature: "+tempinF+" &#730F");
+ var pTwo = $("<p>").text("Temperature: "+tempinF+ "F");//.append($("<span>").text("&#730"));
  weatherDiv.append(pTwo);
 
  //humidity
@@ -131,18 +131,18 @@ $("#cityWeather").append(weatherDiv);
 }
 
 
+//check
 
-
-function displayFiveDayForecast() {
+function displayFiveDayForecast(weatherData) {
   //5day forecast
     for (var i = 0; i < 5; i++) {
 
         const newLocal = i + 1;
         var addDay = newLocal;
-        var iconCode = response.daily[i].weather[i].icon;
+        var iconCode = weatherData.daily[i].weather[i].icon;
         var iconUrl = "http://openweathermap.org/img/wn/"+iconCode+".png";
-        var fTemp= response.daily[i].temp.day;
-        var fHumidity = response.daily[i].humidity;
+        var fTemp= weatherData.daily[i].temp.day;
+        var fHumidity = weatherData.daily[i].humidity;
 
             var fTempInF = FtempKtoF(parseFloat(fTemp));
             function FtempKtoF(fTempInKelvin) {
@@ -187,8 +187,8 @@ function toggleDisplayWeather(show) {
       $("#weatherDisplay").addClass("hidden");
     }
   }
-
-$(".city-btn").on("click", function () {
+//error
+$("a").on("li","click", function () {
     
   getCurrentWeather(city);
   getFiveDayForecast(lat,lon);
