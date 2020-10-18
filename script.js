@@ -12,8 +12,9 @@ function setup() {
     city = searchField.val().trim();
     citySearches.push(city);
 
-    displayCurrentWeather(city);
-    getFiveDayForecast(lat, lon);
+    // displayCurrentWeather(city);
+    getWeatherData(lat, lon)
+    // getFiveDayForecast(lat, lon);
     displayPastCitySearchList();
     setCitiesToLocalStorage();
   });
@@ -115,13 +116,13 @@ function displayCurrentWeather(weatherData) {
   var pFour = $("<p>").text("UV Index: " + uvIndex);
 
   //is this the right way of writing it?
-  if (uvIndex <= 2) {
-    pFour = pFour.attr("id", favorable);
-  } else if (uvIndex > 2 && uvIndex < 6) {
-    pFour = pFour.attr("id", moderate);
-  } else {
-    pFour = pFour.attr("id", danger);
-  }
+//   if (uvIndex <= 2) {
+//     pFour = pFour.attr("id", favorable);
+//   } else if (uvIndex > 2 && uvIndex < 6) {
+//     pFour = pFour.attr("id", moderate);
+//   } else {
+//     pFour = pFour.attr("id", danger);
+//   }
 
   weatherDiv.append(pFour);
   $("#cityWeather").append(weatherDiv);
@@ -187,8 +188,9 @@ function toggleDisplayWeather(show) {
 }
 //error
 $("a").on("li", "click", function () {
-  getCurrentWeather(city);
-  getFiveDayForecast(lat, lon);
+//   getCurrentWeather(city);
+//   getFiveDayForecast(lat, lon);
+    getWeatherData(lat, lon)
   toggleDisplayWeather(show);
 });
 
