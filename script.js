@@ -78,8 +78,8 @@ function getWeatherData(lat, lon) {
   });
 }
 
-function displayCurrentWeather(data) {
-  var cityDiv = $("<div class='nameOfcity'>");
+function displayCurrentWeather(weatherData) {
+  var cityDiv = $("<div>").addClass("nameOfcity");
   var pOne = $("<h1>").text(city);
   //date
   var date = new Date();
@@ -93,25 +93,25 @@ function displayCurrentWeather(data) {
   cityDiv.append(pdate);
   $("#cityWeather").append(cityDiv);
   //temperature
-  var tempinF = data.current.temp;
+  var tempinF = weatherData.current.temp;
   var weatherDiv = $("<div>").addClass(".weatherInfo");
 
   var pTwo = $("<p>").text("Temperature: " + tempinF + "F");
   weatherDiv.append(pTwo);
 
   //humidity
-  var humidity = data.current.humidity;
+  var humidity = weatherData.current.humidity;
   var pThree = $("<p>").text("Humidity: " + humidity + "%");
   weatherDiv.append(pThree);
 
   //wind speed
-  var wind = data.current.wind_speed;
+  var wind = weatherData.current.wind_speed;
   var windMph = (wind * 2.24).toFixed(1);
   var pFour = $("<p>").text("Wind Speed: " + windMph + " MPH");
   weatherDiv.append(pFour);
   $("#cityWeather").append(weatherDiv);
 
-  var uvIndex = data.current.uvi;
+  var uvIndex = weatherData.current.uvi;
   var pFour = $("<p>").text("UV Index: " + uvIndex);
 
   //is this the right way of writing it?
