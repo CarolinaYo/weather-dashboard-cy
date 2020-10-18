@@ -136,23 +136,18 @@ function displayFiveDayForecast(fData) {
   $("#forecastHeading").append(fTitle);
 
   for (var i = 0; i < 5; i++) {
-    const newLocal = i + 1;
-    var addDay = newLocal;
+    //loop not working
+    
     var iconCode = fData.daily[i].weather[i].icon;
     var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
     var fTemp = fData.daily[i].temp.day;
     var fHumidity = fData.daily[i].humidity;
 
-    // var fTempInF = FtempKtoF(parseFloat(fTemp));
-    // function FtempKtoF(fTempInKelvin) {
-    // return (((fTempInKelvin - 273.15) * 9) / 5 + 32).toFixed(2);
-    // }
-
     //future date
     var fdate = new Date();
-    var fd = fdate.getDate() + addDay;
-    var fm = fdate.getMonth() + addDay + 1;
-    var fyyyy = fdate.getFullYear() + addDay;
+    var fd = fdate.getDate() + i+1;
+    var fm = fdate.getMonth() + 1;
+    var fyyyy = fdate.getFullYear();
     var newFutureDate = fd + "/" + fm + "/" + fyyyy;
 
     //place to print the information
