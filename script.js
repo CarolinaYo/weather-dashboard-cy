@@ -137,8 +137,8 @@ function displayFiveDayForecast(fData) {
 
   for (var i = 0; i < 5; i++) {
     //loop not working
-    
-    var iconCode = fData.daily[i].weather[i].icon;
+
+    var iconCode = fData.daily[i].weather[0].icon;
     var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
     var fTemp = fData.daily[i].temp.day;
     var fHumidity = fData.daily[i].humidity;
