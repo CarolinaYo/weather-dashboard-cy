@@ -85,14 +85,13 @@ function getWeatherData(lat, lon) {
 }
 
 function displayCurrentWeather(weatherData) {
-    let unixTimeStamp;
+    let unixTimeStamp = weatherData.current.dt;
     $("#cityWeather").empty();
 
   var cityDiv = $("<div>").addClass(".nameOfcity");
   var pOne = $("<h1>").text(city);
   //date
-//   var date = new Date(unixTimeStamp * 1000); it returns NaN/NaN/NaN
-  var date = new Date();
+  var date = new Date(unixTimeStamp * 1000);
   var dd = date.getDate();
   var mm = date.getMonth() + 1;
   var yyyy = date.getFullYear();
@@ -106,7 +105,7 @@ function displayCurrentWeather(weatherData) {
   var tempinF = parseFloat(weatherData.current.temp);
   var weatherDiv = $("<div>").addClass(".weatherInfo");
 
-  var pTwo = $("<p>").text("Temperature: " + tempinF + " &deg;F");
+  var pTwo = $("<p>").text("Temperature: " + tempinF + " F");//&deg; does not work
   weatherDiv.append(pTwo);
 
   //humidity
@@ -123,7 +122,7 @@ function displayCurrentWeather(weatherData) {
 
   var uvIndex = weatherData.current.uvi;
     var alertIndex;
-
+    //############################################################
    //Problem-----How to partially apply background collor to a text?---------
     if (uvIndex <= 2) {
         alertIndex = $("<div>").addClass("alert alert-success").text(uvIndex);
@@ -141,11 +140,14 @@ function displayCurrentWeather(weatherData) {
   $("#cityWeather").append(weatherDiv);
   
 }
-
+//#################################################################
 //check
 
 function displayFiveDayForecast(fData) {
-  //5day forecast
+
+    $("#forecast").empty();
+
+  //5day forecast------------------------------------
   var fTitle = $("<h1>").text("5-Day forecast");
   $("#forecastHeading").append(fTitle);
 
