@@ -19,12 +19,12 @@ function setup() {
         lon = response.coord.lon;
         getWeatherData(lat, lon);
 
-    })
-
+    });
   });
   getCitiesFromLocalStorage();
 }
 
+// Get saved citySearched array from local storage
 function getCitiesFromLocalStorage() {
   if (localStorage.getItem("cities")) {
     citySearches = JSON.parse(localStorage.getItem("cities"));
@@ -42,14 +42,14 @@ function displayPastCitySearchList() {
   var listOfCities = citySearches.reverse();
 
   for (var i = 0; i < listOfCities.length; i++) {
-    var li = $("<li>");
-    var list = $("<a>");
-    list.addClass("list-group-item list-group-item-action");
-    list.attr("data-city", citySearches[i]);
-    list.text(citySearches[i]);
+    // var li = $("<li>");
+    var a = $("<a>");
+    a.addClass("list-group-item list-group-item-action city-link");
+    a.attr("data-city", citySearches[i]);
+    a.text(citySearches[i]);
 
-    li.append(list);
-    $("#listView").append(li);
+    // li.append(list);
+    $("#listView").append(a);
   }
 }
 
