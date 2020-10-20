@@ -8,12 +8,12 @@ var searchField = $("#searchCity");
 function setup() {
   searchBtn.on("click", function (event) {
     event.preventDefault();
-
     city = searchField.val().trim();
     citySearches.push(city);
 
-    displayPastCitySearchList();
     setCitiesToLocalStorage();
+    displayPastCitySearchList();
+    
     getLatLong(city).then(function (response) {
         lat = response.coord.lat;
         lon = response.coord.lon;
@@ -43,8 +43,7 @@ function displayPastCitySearchList() {
 
     //   var listOfCities = citySearches.reverse();
 
-  for (var i = citySearches.length; i>=0; i--) {
-    // var li = $("<li>");
+  for (var i = citySearches.length-1; i>=0; i--) {
     a = $("<a>");
     a.addClass("list-group-item list-group-item-action city-link");
     a.attr("data-city", citySearches[i]);
@@ -99,21 +98,23 @@ function getWeatherData(lat, lon) {
 }
 
 function displayCurrentWeather(weatherData) {
+    //date stamp is using UNIX UTC format from API date
     let unixTimeStamp = weatherData.current.dt;
     $("#cityWeather").empty();
 
   var cityDiv = $("<div>").addClass(".nameOfcity");
-  var pOne = $("<h1>").text(city);
+  
   //date
   var date = new Date(unixTimeStamp * 1000);
   var dd = date.getDate();
   var mm = date.getMonth() + 1;
   var yyyy = date.getFullYear();
   var currentDate = dd + "/" + mm + "/" + yyyy;
-  var pdate = $("<p>").text("(" + currentDate + ")");
+  var pdate = $("<span>").text("  (" + currentDate + ")");
 
+  var pOne = $("<h1>").text(city).append(pdate);
   cityDiv.append(pOne);
-  cityDiv.append(pdate);
+
   $("#cityWeather").append(cityDiv);
   //temperature
   var tempinF = parseFloat(weatherData.current.temp);
@@ -137,20 +138,20 @@ function displayCurrentWeather(weatherData) {
   var uvIndex = weatherData.current.uvi;
     var alertIndex;
     //############################################################
-   //Problem-----How to partially apply background collor to a text?---------
-    if (uvIndex <= 2) {
-        alertIndex = $("<div>").addClass("alert alert-success").text(uvIndex);
+   //Problem-----
+    if (uvIndex < 3) {
+        alertIndex = $("<span>").addClass("badge badge-success").text(uvIndex);
 
-    } else if (uvIndex > 2 && uvIndex < 6) {
-        alertIndex = $("<div>").addClass("alert alert-warning").text(uvIndex);
+    } else if (uvIndex >= 3 && uvIndex < 6) {
+        alertIndex = $("<span>").addClass("badge badge-warning").text(uvIndex);
     } else {
-        alertIndex = $("<div>").addClass("alert alert-danger").text(uvIndex);
+        alertIndex = $("<span>").addClass("badge badge-danger").text(uvIndex);
     }
 
     //I thought this would work...
-// var pFour = $("<p>").text("UV Index: " + alertIndex);
+var pFour = $("<p>").text("UV Index: ").append(alertIndex);
 
-  weatherDiv.append(alertIndex);
+  weatherDiv.append(pFour);
   $("#cityWeather").append(weatherDiv);
   
 }
@@ -161,9 +162,6 @@ function displayFiveDayForecast(fData) {
 
     $("#forecast").empty();
 
-  //5day forecast------------------------------------
-  var fTitle = $("<h1>").text("5-Day forecast");
-  $("#forecastHeading").append(fTitle);
 
   for (var i = 0; i < 5; i++) {
     var iconCode = fData.daily[i].weather[0].icon;
@@ -212,10 +210,10 @@ function toggleDisplayWeather(show) {
   }
 }
 //click does not work
-$("a").on("li", "click", function () {
-  getWeatherData(lat, lon);
-  toggleDisplayWeather(show);
-});
+    // $("a").on("li", "click", function () {
+    //   getWeatherData(lat, lon);
+    //   toggleDisplayWeather(show);
+    // });
  
 $(document).ready(function () {
   setup();
