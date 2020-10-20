@@ -4,21 +4,23 @@
 .fa-search {
   color: cornsilk;
 }
-li {
-  display: block;
-  margin-left: 5px;
-}
+
 .weather-details {
   margin-left: 40px;
 }
 
 #forecast {
   margin-left: 20px;
+  margin-right: 20px;
 }
+
 .hidden {
     display: none;
     }
 
+.city-link{
+    cursor: pointer;
+}
 
 #favorable {
     background-color: yellow;
