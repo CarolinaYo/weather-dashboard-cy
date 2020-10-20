@@ -40,7 +40,7 @@ function displayPastCitySearchList() {
   $("#buttonView").empty();
   $("#listView").empty();
 
-    // var listOfCities = citySearches.reverse();
+  // var listOfCities = citySearches.reverse();
 
   for (var i = citySearches.length - 1; i >= 0; i--) {
     a = $("<a>");
@@ -131,7 +131,7 @@ function displayCurrentWeather(weatherData) {
 
   var uvIndex = weatherData.current.uvi;
   var alertIndex;
-  
+
   if (uvIndex < 3) {
     alertIndex = $("<span>").addClass("badge badge-success").text(uvIndex);
   } else if (uvIndex >= 3 && uvIndex < 6) {
@@ -147,18 +147,16 @@ function displayCurrentWeather(weatherData) {
   $("#cityWeather").append(weatherDiv);
 }
 
-
-
 function displayFiveDayForecast(fData) {
   $("#forecast").empty();
-    $(".forecastHeading").text("5-Day Forecast");
+  $(".forecastHeading").text("5-Day Forecast");
 
   for (var i = 0; i < 5; i++) {
     var iconCode = fData.daily[i].weather[0].icon;
     var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
-    var fTemp = fData.daily[i+1].temp.day;
+    var fTemp = fData.daily[i + 1].temp.day;
     var fparseTemp = parseFloat(fTemp);
-    var fHumidity = fData.daily[i+1].humidity;
+    var fHumidity = fData.daily[i + 1].humidity;
 
     //future date
     var unixTimeStamp = fData.daily[i + 1].dt;
