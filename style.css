@@ -9,8 +9,8 @@
   margin-left: 40px;
 }
 
-.forecastHeading{
-    margin-left: 20px;
+.forecastHeading {
+  margin-left: 20px;
 }
 #forecast {
   margin-left: 20px;
@@ -18,25 +18,14 @@
 }
 
 .weather-icon {
-    height: 72px;
-    width: 72px;
-
+  height: 72px;
+  width: 72px;
 }
 .hidden {
-    display: none;
-    }
-
-.city-link{
-    cursor: pointer;
+  display: none;
 }
-/* 
-.favorable {
-    background-color: yellow;
-};
 
-.moderate {
-    background-color: orange;
-};
-.severe {
-    background-color: red;
-} */
+.city-link {
+  cursor: pointer;
+  display: block;
+}
