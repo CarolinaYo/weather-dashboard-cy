@@ -21,14 +21,14 @@
 .city-link{
     cursor: pointer;
 }
-
-#favorable {
+/* 
+.favorable {
     background-color: yellow;
 };
 
-#moderate {
+.moderate {
     background-color: orange;
 };
-#severe {
+.severe {
     background-color: red;
-}
+} */
