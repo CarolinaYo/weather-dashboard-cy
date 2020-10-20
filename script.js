@@ -12,11 +12,15 @@ function setup() {
     city = searchField.val().trim();
     citySearches.push(city);
 
-    // displayCurrentWeather(city);
-    getWeatherData(lat, lon)
-    // getFiveDayForecast(lat, lon);
     displayPastCitySearchList();
     setCitiesToLocalStorage();
+    getLatLong(city).then(function (response) {
+        lat = response.coord.lat;
+        lon = response.coord.lon;
+        getWeatherData(lat, lon);
+
+    })
+
   });
   getCitiesFromLocalStorage();
 }
@@ -76,6 +80,7 @@ function getWeatherData(lat, lon) {
     var weatherData = response;
     displayCurrentWeather(weatherData);
     displayFiveDayForecast(weatherData);
+    
   });
 }
 
@@ -116,16 +121,17 @@ function displayCurrentWeather(weatherData) {
   var pFour = $("<p>").text("UV Index: " + uvIndex);
 
   //is this the right way of writing it?
-//   if (uvIndex <= 2) {
-//     pFour = pFour.attr("id", favorable);
-//   } else if (uvIndex > 2 && uvIndex < 6) {
-//     pFour = pFour.attr("id", moderate);
-//   } else {
-//     pFour = pFour.attr("id", danger);
-//   }
+  //   if (uvIndex <= 2) {
+  //     pFour = pFour.attr("id", favorable);
+  //   } else if (uvIndex > 2 && uvIndex < 6) {
+  //     pFour = pFour.attr("id", moderate);
+  //   } else {
+  //     pFour = pFour.attr("id", danger);
+  //   }
 
   weatherDiv.append(pFour);
   $("#cityWeather").append(weatherDiv);
+  
 }
 
 //check
@@ -136,8 +142,6 @@ function displayFiveDayForecast(fData) {
   $("#forecastHeading").append(fTitle);
 
   for (var i = 0; i < 5; i++) {
-    //loop not working
-
     var iconCode = fData.daily[i].weather[0].icon;
     var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
     var fTemp = fData.daily[i].temp.day;
@@ -145,7 +149,7 @@ function displayFiveDayForecast(fData) {
 
     //future date
     var fdate = new Date();
-    var fd = fdate.getDate() + i+1;
+    var fd = fdate.getDate() + i + 1;
     var fm = fdate.getMonth() + 1;
     var fyyyy = fdate.getFullYear();
     var newFutureDate = fd + "/" + fm + "/" + fyyyy;
@@ -159,7 +163,6 @@ function displayFiveDayForecast(fData) {
     var newDate = $("<p>").text(newFutureDate);
 
     forecastDiv.append(newDate);
-    // $("#forecast").append(forecastDiv);
 
     var ficon = $("<img>").attr("src", iconUrl);
     forecastDiv.append(ficon);
@@ -181,14 +184,12 @@ function toggleDisplayWeather(show) {
     $("#weatherDisplay").addClass("hidden");
   }
 }
-//error
+//click does not work
 $("a").on("li", "click", function () {
-//   getCurrentWeather(city);
-//   getFiveDayForecast(lat, lon);
-    getWeatherData(lat, lon)
+  getWeatherData(lat, lon);
   toggleDisplayWeather(show);
 });
-
+ 
 $(document).ready(function () {
   setup();
 
