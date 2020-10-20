@@ -85,9 +85,13 @@ function getWeatherData(lat, lon) {
 }
 
 function displayCurrentWeather(weatherData) {
-  var cityDiv = $("<div>").addClass("nameOfcity");
+    let unixTimeStamp;
+    $("#cityWeather").empty();
+
+  var cityDiv = $("<div>").addClass(".nameOfcity");
   var pOne = $("<h1>").text(city);
   //date
+//   var date = new Date(unixTimeStamp * 1000); it returns NaN/NaN/NaN
   var date = new Date();
   var dd = date.getDate();
   var mm = date.getMonth() + 1;
@@ -99,10 +103,10 @@ function displayCurrentWeather(weatherData) {
   cityDiv.append(pdate);
   $("#cityWeather").append(cityDiv);
   //temperature
-  var tempinF = weatherData.current.temp;
+  var tempinF = parseFloat(weatherData.current.temp);
   var weatherDiv = $("<div>").addClass(".weatherInfo");
 
-  var pTwo = $("<p>").text("Temperature: " + tempinF + "F");
+  var pTwo = $("<p>").text("Temperature: " + tempinF + " &deg;F");
   weatherDiv.append(pTwo);
 
   //humidity
@@ -112,8 +116,8 @@ function displayCurrentWeather(weatherData) {
 
   //wind speed
   var wind = weatherData.current.wind_speed;
-  var windMph = (wind * 2.24).toFixed(1);
-  var pFour = $("<p>").text("Wind Speed: " + windMph + " MPH");
+//   var windMph = (wind * 2.24).toFixed(1);
+  var pFour = $("<p>").text("Wind Speed: " + wind + " MPH");
   weatherDiv.append(pFour);
   $("#cityWeather").append(weatherDiv);
 
