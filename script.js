@@ -13,12 +13,11 @@ function setup() {
 
     setCitiesToLocalStorage();
     displayPastCitySearchList();
-    
-    getLatLong(city).then(function (response) {
-        lat = response.coord.lat;
-        lon = response.coord.lon;
-        getWeatherData(lat, lon);
 
+    getLatLong(city).then(function (response) {
+      lat = response.coord.lat;
+      lon = response.coord.lon;
+      getWeatherData(lat, lon);
     });
   });
   getCitiesFromLocalStorage();
@@ -37,13 +36,13 @@ function setCitiesToLocalStorage() {
 }
 
 function displayPastCitySearchList() {
-    var a;
-    $("#buttonView").empty();
-    $("#listView").empty();
+  var a;
+  $("#buttonView").empty();
+  $("#listView").empty();
 
-    //   var listOfCities = citySearches.reverse();
+    // var listOfCities = citySearches.reverse();
 
-  for (var i = citySearches.length-1; i>=0; i--) {
+  for (var i = citySearches.length - 1; i >= 0; i--) {
     a = $("<a>");
     a.addClass("list-group-item list-group-item-action city-link");
     a.attr("data-city", citySearches[i]);
@@ -51,19 +50,16 @@ function displayPastCitySearchList() {
 
     //click listener
     a.on("click", function (event) {
-        event.preventDefault();
-        city = $(event.target).data("city");
-        getLatLong(city).then(function (response) {
-            lat = response.coord.lat;
-            lon = response.coord.lon;
-            getWeatherData(lat, lon);
-
-        });
-   
-     });
-        $("#listView").append(a);
-    }
-
+      event.preventDefault();
+      city = $(event.target).data("city");
+      getLatLong(city).then(function (response) {
+        lat = response.coord.lat;
+        lon = response.coord.lon;
+        getWeatherData(lat, lon);
+      });
+    });
+    $("#listView").append(a);
+  }
 }
 
 function getLatLong(cityName) {
@@ -93,17 +89,16 @@ function getWeatherData(lat, lon) {
     var weatherData = response;
     displayCurrentWeather(weatherData);
     displayFiveDayForecast(weatherData);
-    
   });
 }
 
 function displayCurrentWeather(weatherData) {
-    //date stamp is using UNIX UTC format from API date
-    let unixTimeStamp = weatherData.current.dt;
-    $("#cityWeather").empty();
+  //date stamp is using UNIX UTC format from API date
+  let unixTimeStamp = weatherData.current.dt;
+  $("#cityWeather").empty();
 
   var cityDiv = $("<div>").addClass(".nameOfcity");
-  
+
   //date
   var date = new Date(unixTimeStamp * 1000);
   var dd = date.getDate();
@@ -120,7 +115,7 @@ function displayCurrentWeather(weatherData) {
   var tempinF = parseFloat(weatherData.current.temp);
   var weatherDiv = $("<div>").addClass(".weatherInfo");
 
-  var pTwo = $("<p>").text("Temperature: " + tempinF + " F");//&deg; does not work
+  var pTwo = $("<p>").text("Temperature: " + tempinF + " F"); //&deg; does not work
   weatherDiv.append(pTwo);
 
   //humidity
@@ -130,48 +125,43 @@ function displayCurrentWeather(weatherData) {
 
   //wind speed
   var wind = weatherData.current.wind_speed;
-//   var windMph = (wind * 2.24).toFixed(1);
   var pFour = $("<p>").text("Wind Speed: " + wind + " MPH");
   weatherDiv.append(pFour);
   $("#cityWeather").append(weatherDiv);
 
   var uvIndex = weatherData.current.uvi;
-    var alertIndex;
-    //############################################################
-   //Problem-----
-    if (uvIndex < 3) {
-        alertIndex = $("<span>").addClass("badge badge-success").text(uvIndex);
+  var alertIndex;
+  
+  if (uvIndex < 3) {
+    alertIndex = $("<span>").addClass("badge badge-success").text(uvIndex);
+  } else if (uvIndex >= 3 && uvIndex < 6) {
+    alertIndex = $("<span>").addClass("badge badge-warning").text(uvIndex);
+  } else {
+    alertIndex = $("<span>").addClass("badge badge-danger").text(uvIndex);
+  }
 
-    } else if (uvIndex >= 3 && uvIndex < 6) {
-        alertIndex = $("<span>").addClass("badge badge-warning").text(uvIndex);
-    } else {
-        alertIndex = $("<span>").addClass("badge badge-danger").text(uvIndex);
-    }
-
-    //I thought this would work...
-var pFour = $("<p>").text("UV Index: ").append(alertIndex);
+  //I thought this would work...
+  var pFour = $("<p>").text("UV Index: ").append(alertIndex);
 
   weatherDiv.append(pFour);
   $("#cityWeather").append(weatherDiv);
-  
 }
-//#################################################################
-//check
+
+
 
 function displayFiveDayForecast(fData) {
-
-    $("#forecast").empty();
-
+  $("#forecast").empty();
+    $(".forecastHeading").text("5-Day Forecast");
 
   for (var i = 0; i < 5; i++) {
     var iconCode = fData.daily[i].weather[0].icon;
     var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
-    var fTemp = fData.daily[i].temp.day;
-    var fparseTemp=parseFloat(fTemp);
-    var fHumidity = fData.daily[i].humidity;
+    var fTemp = fData.daily[i+1].temp.day;
+    var fparseTemp = parseFloat(fTemp);
+    var fHumidity = fData.daily[i+1].humidity;
 
     //future date
-    var unixTimeStamp = fData.daily[i].dt;
+    var unixTimeStamp = fData.daily[i + 1].dt;
     var fDate = new Date(unixTimeStamp * 1000);
     var fd = fDate.getDate();
     var fm = fDate.getMonth() + 1;
@@ -189,7 +179,7 @@ function displayFiveDayForecast(fData) {
     forecastDiv.append(newDate);
 
     var fIcon = $("<img>").attr("src", iconUrl);
-    fIcon.addClass("weather-icon")
+    fIcon.addClass("weather-icon");
     forecastDiv.append(fIcon);
 
     var ftempinF = $("<p>").text("Temperature: " + fparseTemp + "  F");
@@ -201,20 +191,20 @@ function displayFiveDayForecast(fData) {
   }
 }
 
-function toggleDisplayWeather(show) {
-  var show = false;
-  if (show) {
-    $("#weatherDisplay").removeClass("hidden");
-  } else {
-    $("#weatherDisplay").addClass("hidden");
-  }
-}
+// function toggleDisplayWeather(show) {
+//   var show = false;
+//   if (show) {
+//     $("#weatherDisplay").removeClass("hidden");
+//   } else {
+//     $("#weatherDisplay").addClass("hidden");
+//   }
+// }
 //click does not work
-    // $("a").on("li", "click", function () {
-    //   getWeatherData(lat, lon);
-    //   toggleDisplayWeather(show);
-    // });
- 
+// $("a").on("li", "click", function () {
+//   getWeatherData(lat, lon);
+//   toggleDisplayWeather(show);
+// });
+
 $(document).ready(function () {
   setup();
 
