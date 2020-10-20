@@ -9,11 +9,19 @@
   margin-left: 40px;
 }
 
+.forecastHeading{
+    margin-left: 20px;
+}
 #forecast {
   margin-left: 20px;
   margin-right: 20px;
 }
 
+.weather-icon {
+    height: 72px;
+    width: 72px;
+
+}
 .hidden {
     display: none;
     }
