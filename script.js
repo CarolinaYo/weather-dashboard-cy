@@ -122,18 +122,22 @@ function displayCurrentWeather(weatherData) {
   $("#cityWeather").append(weatherDiv);
 
   var uvIndex = weatherData.current.uvi;
-  var pFour = $("<p>").text("UV Index: " + uvIndex);
+    var alertIndex;
 
-  //is this the right way of writing it?
-  //   if (uvIndex <= 2) {
-  //     pFour = pFour.attr("id", favorable);
-  //   } else if (uvIndex > 2 && uvIndex < 6) {
-  //     pFour = pFour.attr("id", moderate);
-  //   } else {
-  //     pFour = pFour.attr("id", danger);
-  //   }
+   //Problem-----How to partially apply background collor to a text?---------
+    if (uvIndex <= 2) {
+        alertIndex = $("<div>").addClass("alert alert-success").text(uvIndex);
 
-  weatherDiv.append(pFour);
+    } else if (uvIndex > 2 && uvIndex < 6) {
+        alertIndex = $("<div>").addClass("alert alert-warning").text(uvIndex);
+    } else {
+        alertIndex = $("<div>").addClass("alert alert-danger").text(uvIndex);
+    }
+
+    //I thought this would work...
+// var pFour = $("<p>").text("UV Index: " + alertIndex);
+
+  weatherDiv.append(alertIndex);
   $("#cityWeather").append(weatherDiv);
   
 }
