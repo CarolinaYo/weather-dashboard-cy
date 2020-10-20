@@ -37,20 +37,34 @@ function setCitiesToLocalStorage() {
 }
 
 function displayPastCitySearchList() {
-  $("#buttonView").empty();
+    var a;
+    $("#buttonView").empty();
+    $("#listView").empty();
 
-  var listOfCities = citySearches.reverse();
+    //   var listOfCities = citySearches.reverse();
 
-  for (var i = 0; i < listOfCities.length; i++) {
+  for (var i = citySearches.length; i>=0; i--) {
     // var li = $("<li>");
-    var a = $("<a>");
+    a = $("<a>");
     a.addClass("list-group-item list-group-item-action city-link");
     a.attr("data-city", citySearches[i]);
     a.text(citySearches[i]);
 
-    // li.append(list);
-    $("#listView").append(a);
-  }
+    //click listener
+    a.on("click", function (event) {
+        event.preventDefault();
+        city = $(event.target).data("city");
+        getLatLong(city).then(function (response) {
+            lat = response.coord.lat;
+            lon = response.coord.lon;
+            getWeatherData(lat, lon);
+
+        });
+   
+     });
+        $("#listView").append(a);
+    }
+
 }
 
 function getLatLong(cityName) {
@@ -155,29 +169,32 @@ function displayFiveDayForecast(fData) {
     var iconCode = fData.daily[i].weather[0].icon;
     var iconUrl = "http://openweathermap.org/img/wn/" + iconCode + ".png";
     var fTemp = fData.daily[i].temp.day;
+    var fparseTemp=parseFloat(fTemp);
     var fHumidity = fData.daily[i].humidity;
 
     //future date
-    var fdate = new Date();
-    var fd = fdate.getDate() + i + 1;
-    var fm = fdate.getMonth() + 1;
-    var fyyyy = fdate.getFullYear();
+    var unixTimeStamp = fData.daily[i].dt;
+    var fDate = new Date(unixTimeStamp * 1000);
+    var fd = fDate.getDate();
+    var fm = fDate.getMonth() + 1;
+    var fyyyy = fDate.getFullYear();
     var newFutureDate = fd + "/" + fm + "/" + fyyyy;
 
     //place to print the information
 
     var forecastDiv = $("<div>").addClass(
-      "card col-sm-2 bg-primary text-white p-3"
+      "card col-sm-2 bg-primary text-white p-3 mr-2 mb-2"
     );
 
     var newDate = $("<p>").text(newFutureDate);
 
     forecastDiv.append(newDate);
 
-    var ficon = $("<img>").attr("src", iconUrl);
-    forecastDiv.append(ficon);
+    var fIcon = $("<img>").attr("src", iconUrl);
+    fIcon.addClass("weather-icon")
+    forecastDiv.append(fIcon);
 
-    var ftempinF = $("<p>").text("Temperature: " + fTemp + "  F");
+    var ftempinF = $("<p>").text("Temperature: " + fparseTemp + "  F");
     forecastDiv.append(ftempinF);
 
     var fHumidValue = $("<p>").text("Humidity: " + fHumidity);
