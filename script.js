@@ -189,20 +189,6 @@ function displayFiveDayForecast(fData) {
   }
 }
 
-// function toggleDisplayWeather(show) {
-//   var show = false;
-//   if (show) {
-//     $("#weatherDisplay").removeClass("hidden");
-//   } else {
-//     $("#weatherDisplay").addClass("hidden");
-//   }
-// }
-//click does not work
-// $("a").on("li", "click", function () {
-//   getWeatherData(lat, lon);
-//   toggleDisplayWeather(show);
-// });
-
 $(document).ready(function () {
   setup();
 
